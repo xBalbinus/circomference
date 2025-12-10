@@ -11,7 +11,7 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 r1cs-file = "0.3.0"
 memory-stats = "1.0.0"
-num-bigint = "0.4.3"
+num-bigint = "0.4.6"
 clap = { version = "4.3.0", features = ["derive"] }
 smtlib = { git = "https://github.com/trail-of-forks/smtlib-rs.git", default-features = false }
 smtlib-lowlevel = { git = "https://github.com/trail-of-forks/smtlib-rs.git", default-features = false } 
