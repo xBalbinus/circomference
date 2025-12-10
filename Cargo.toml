@@ -15,7 +15,7 @@ num-bigint = "0.4.3"
 clap = { version = "4.3.0", features = ["derive"] }
 smtlib = { git = "https://github.com/trail-of-forks/smtlib-rs.git", default-features = false }
 smtlib-lowlevel = { git = "https://github.com/trail-of-forks/smtlib-rs.git", default-features = false } 
-regex = "1.9.1"
+regex = "1.9.4"
 
 [dev-dependencies]
 tempfile = "3.7.0"
