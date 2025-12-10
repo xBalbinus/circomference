@@ -36,7 +36,7 @@ jobs:
       - name: Build cvc5
         run: sudo cargo run --bin cvc5-builder
       - name: Cache cvc5 Binary
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./circomference/circomference/src/cvc5
           key: ${{ runner.os }}-cvc5-${{ github.sha }}
