@@ -1,0 +1,89 @@
+name: CI # Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@nightly
+      - uses: Swatinem/rust-cache@v2
+      - name: Build
+        run: cargo build
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+      - name: Pull CVC5
+        run: git submodule update --init --recursive
+      # Python setup is required for cvc5 configuration
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python3 -m ensurepip
+          python3 -m pip install --upgrade pip
+          python3 -m pip install --user pexpect setuptools toml pyparsing
+      - name: Build cvc5
+        run: sudo cargo run --bin cvc5-builder
+      - name: Cache cvc5 Binary
+        uses: actions/cache@v2
+        with:
+          path: ./circomference/circomference/src/cvc5
+          key: ${{ runner.os }}-cvc5-${{ github.sha }}
+      - name: Run tests
+        run: cargo test
+      - name: Generate code coverage
+        run: cargo llvm-cov --workspace --lcov --output-path lcov.info
+
+  rustfmt:
+    name: Rustfmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt
+      - uses: Swatinem/rust-cache@v2
+      - name: Check formatting
+        run: cargo fmt --all --check
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: Clippy check
+        run: cargo clippy --all-targets --workspace -- -D warnings
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Check documentation
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --no-deps --document-private-items --workspace --examples
+

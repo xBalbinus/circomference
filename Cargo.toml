@@ -1,0 +1,26 @@
+[package]
+name = "circomference"
+version = "0.1.0"
+edition = "2021"
+description = "memory optimized, R1CS circuit verifier"
+repository = "https://github.com/trailofbits/circomference"
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+r1cs-file = "0.3.0"
+memory-stats = "1.0.0"
+num-bigint = "0.4.3"
+clap = { version = "4.3.0", features = ["derive"] }
+smtlib = { git = "https://github.com/trail-of-forks/smtlib-rs.git", default-features = false }
+smtlib-lowlevel = { git = "https://github.com/trail-of-forks/smtlib-rs.git", default-features = false } 
+regex = "1.9.1"
+
+[dev-dependencies]
+tempfile = "3.7.0"
+
+[features]
+default = ["cvc5"]
+cvc5 = ["smtlib/cvc5", "smtlib-lowlevel/cvc5"]
+z3 = ["smtlib/z3-static", "smtlib-lowlevel/z3-static"]

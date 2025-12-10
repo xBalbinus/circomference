@@ -1,0 +1,12 @@
+1,1,1,main.out
+2,2,1,main.in[0]
+3,3,1,main.in[1]
+4,-1,0,main.checkZero.out
+5,4,0,main.checkZero.in
+6,5,0,main.checkZero.inv
+7,6,0,main.isZeros[0].out
+8,-1,0,main.isZeros[0].in
+9,7,0,main.isZeros[0].inv
+10,-1,0,main.isZeros[1].out
+11,-1,0,main.isZeros[1].in
+12,8,0,main.isZeros[1].inv

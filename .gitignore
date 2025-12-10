@@ -1,0 +1,7 @@
+/target
+.cargo-ok
+.DS_Store
+dump.txt
+.z3-trace
+.swp
+lcov.info
