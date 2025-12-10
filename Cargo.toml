@@ -18,7 +18,7 @@ smtlib-lowlevel = { git = "https://github.com/trail-of-forks/smtlib-rs.git", def
 regex = "1.9.1"
 
 [dev-dependencies]
-tempfile = "3.7.0"
+tempfile = "3.10.1"
 
 [features]
 default = ["cvc5"]
